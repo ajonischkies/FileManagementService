@@ -28,3 +28,5 @@ MongoDB was chosen because the document store is (unsurprisingly) ideal for stor
 ## Improvements
 
 The unit test coverage leaves some to be desired, and ideally I would mock internal MongoDB interfaces to provide a context test layer, as well as add unit tests for the controllers (or use a Postman collection).  I might move Automapper to the business layer to allow for logic utilizing multiple DTO models, which could be useful with more integrations or usertypes.  It lacks authentication/authorization, so whatever desired provider could be added as well.  It'd be simple to add a delete link to the file summaries as well, but I chose to omit it for now, as such functionality will likely not be available to all users.
+
+Other possible changes are file sizes and efficiency.  BSON maximum document size is 16 MB, and this can be plausibly exceeded especially with large images or high-res PDFs.  Compressing the files, and creating logic for split documents for larger ones, would allow files of any size to be stored, limited only by transport, scalability, and associated configuration.  For now, they're left as byte arrays.'
