@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - '27017:27017'
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports: 
+      - '8081:8081'
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+    depends_on:
+      - mongo
+
+  filemanagementservice:
+    image: ${DOCKER_REGISTRY-}filemanagementservice
+    build:
+      context: .
+      dockerfile: FileManagementService/Dockerfile
+    environment:
+      MongoDB__Host: mongo
+    depends_on:
+      - mongo

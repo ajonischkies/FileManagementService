@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>RedSky.FileManagement.Business</RootNamespace>
+    <AssemblyName>FileManagement.Business</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FileManagementService_Contracts\FileManagementService_Contracts.csproj" />
+    <ProjectReference Include="..\FileManagementService_Data\FileManagementService_Data.csproj" />
+  </ItemGroup>
+
+</Project>

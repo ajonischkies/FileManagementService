@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_URLS=http://+:80
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+EXPOSE 80
+
+WORKDIR /src
+COPY ["FileManagementService/FileManagementService.csproj", "FileManagementService/"]
+COPY ["FileManagementService_Business/FileManagementService_Business.csproj", "FileManagementService_Business/"]
+COPY ["FileManagementService_Contracts/FileManagementService_Contracts.csproj", "FileManagementService_Contracts/"]
+COPY ["FileManagementService_Data/FileManagementService_Data.csproj", "FileManagementService_Data/"]
+
+RUN dotnet restore "FileManagementService/FileManagementService.csproj"
+COPY . .
+WORKDIR "/src/FileManagementService"
+RUN dotnet build --no-restore "FileManagementService.csproj" -c $BUILD_CONFIGURATION
+
+RUN echo "exec dotnet run --no-build --no-launch-profile -c $BUILD_CONFIGURATION --" > /entrypoint.sh
+
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
