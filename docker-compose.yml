@@ -28,5 +28,7 @@ services:
       dockerfile: FileManagementService/Dockerfile
     environment:
       MongoDB__Host: mongo
+    ports:
+      - '443:443'
     depends_on:
       - mongo
